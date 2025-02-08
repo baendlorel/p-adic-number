@@ -1,5 +1,4 @@
 export class PAdicNumber extends Array {
-  private static readonly MAX_DIGIT_SIZE = 50;
   readonly p: number;
   hasInfinityDigits: boolean;
 
@@ -33,6 +32,10 @@ export class PAdicNumber extends Array {
     this.p = p;
     this.push(...digits);
     this.hasInfinityDigits = hasInfinityDigits;
+  }
+
+  static get MAX_DIGIT_SIZE() {
+    return 50;
   }
 
   private static prepare(a: PAdicNumber, b: PAdicNumber) {
@@ -86,7 +89,7 @@ export class PAdicNumber extends Array {
     const r: number[] = [];
     for (let i = 0; i < length; i++) {
       if (a[i] - carry > b[i]) {
-        r.push(a[i] - b[i]);
+        r.push(a[i] - carry - b[i]);
         carry = 0;
       } else {
         r.push(p + a[i] - carry - b[i]);
@@ -94,11 +97,9 @@ export class PAdicNumber extends Array {
       }
     }
 
-    console.log({ p, a, b, r });
-
     if (carry === 1) {
-      a.length = PAdicNumber.MAX_DIGIT_SIZE;
-      a.fill(p - 1, length, PAdicNumber.MAX_DIGIT_SIZE);
+      r.length = PAdicNumber.MAX_DIGIT_SIZE;
+      r.fill(p - 1, length, PAdicNumber.MAX_DIGIT_SIZE);
     }
 
     return new PAdicNumber(p, r, carry === 1);
@@ -134,6 +135,8 @@ export class PAdicNumber extends Array {
   toDemical() {}
 
   toString() {
-    return this.reverse().join('');
+    const dot = this.hasInfinityDigits ? '...' : '';
+    const digits = this.reverse().join('');
+    return `${dot}${digits}`;
   }
 }
