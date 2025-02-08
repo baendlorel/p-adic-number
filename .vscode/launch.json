@@ -1,0 +1,29 @@
+{
+  // 使用 IntelliSense 了解相关属性。
+  // 悬停以查看现有属性的描述。
+  // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Jest Tests", // 配置名称
+      "skipFiles": ["**/node_modules/**"], // 跳过 Node.js 内部文件
+      "program": "${workspaceFolder}/node_modules/jest/bin/jest.js", // Jest 入口文件
+      "args": ["--runInBand", "--config", "${workspaceFolder}/jest.config.js"], // Jest 参数
+      "console": "integratedTerminal", // 在集成终端中运行
+      "internalConsoleOptions": "neverOpen", // 不打开内部控制台
+      "sourceMaps": true, // 启用源映射
+      "outFiles": ["${workspaceFolder}/dist/*.js"], // 编译后的 JS 文件路径
+      "preLaunchTask": "tsc: build - tsconfig.json" // 调试前编译 TypeScript
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Program",
+      "program": "${workspaceFolder}/src/index.ts",
+      "preLaunchTask": "tsc: build - tsconfig.json",
+      "outFiles": ["${workspaceFolder}/dist/*.js"]
+    }
+  ]
+}

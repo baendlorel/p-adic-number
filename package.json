@@ -1,6 +1,6 @@
 {
-  "name": "js-is-arrow-function",
-  "version": "1.0.0",
+  "name": "p-adic-number",
+  "version": "0.0.1",
   "author": {
     "name": "KasukabeTsumugi",
     "email": "futami16237@gmail.com"
@@ -11,14 +11,14 @@
   "files": [
     "dist"
   ],
-  "homepage": "https://github.com/baendlorel/js-is-arrow-function#readme",
+  "homepage": "https://github.com/baendlorel/p-adic-number#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/baendlorel/js-is-arrow-function"
+    "url": "https://github.com/baendlorel/p-adic-number"
   },
   "keywords": [
-    "arrow function",
-    "function",
+    "p-adic",
+    "math",
     "node",
     "nodejs"
   ],
@@ -38,6 +38,7 @@
     "@types/jest": "^29.5.14",
     "babel-jest": "^29.7.0",
     "jest": "^29.7.0",
+    "ts-jest": "^29.2.5",
     "typescript": "^5.7.3",
     "uglify-js": "^3.19.3"
   },

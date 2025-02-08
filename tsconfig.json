@@ -5,8 +5,9 @@
     "target": "es6",
     "outDir": "dist",
     "esModuleInterop": true, // 可选，增强兼容性
-    "strict": true
+    "strict": true,
+    "sourceMap": true
   },
   "include": ["src/*.ts"],
-  "exclude": ["tests"]
+  "exclude": ["node_modules"]
 }

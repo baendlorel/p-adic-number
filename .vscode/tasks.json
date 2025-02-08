@@ -1,0 +1,15 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "tsc: build - tsconfig.json", // 任务名称（与 launch.json 中的 preLaunchTask 一致）
+      "type": "typescript",
+      "tsconfig": "tsconfig.json", // 使用的 tsconfig 文件
+      "problemMatcher": ["$tsc"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+}

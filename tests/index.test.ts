@@ -1,6 +1,8 @@
 import { describe } from '@jest/globals';
 import { PAdicNumber } from '../src';
 
+new PAdicNumber(10, [0]);
+
 describe('加法', () => {
   test(`有限加法 432+9=423`, () => {
     const a = new PAdicNumber(10, [2, 3, 4]);

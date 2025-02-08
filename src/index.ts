@@ -3,34 +3,41 @@ export class PAdicNumber extends Array {
   hasInfinityDigits: boolean;
 
   constructor(p: number, digits: number[], hasInfinityDigits: boolean = false) {
-    if (!Number.isInteger(p)) {
-      throw new Error('给定的p不是整数');
+    if (!Number.isInteger(p) || p < 2) {
+      throw new Error('给定的p必须是大于等于2的正整数');
     }
-    if (!Array.isArray(digits)) {
-      throw new Error('给定的digits必须是整数组成的数组，且每一位都小于p');
+    if (
+      !Array.isArray(digits) ||
+      digits.filter((d) => !Number.isInteger(d) || d >= p || d < 0).length > 0
+    ) {
+      throw new Error('给定的digits必须是正整数组成的数组，每一位都小于p，且每一位都必须是正整数');
     }
-    if (digits.filter((d) => !Number.isInteger(d) || d >= p).length > 0) {
-      throw new Error('给定的Digits必须每一位都小于p，且每一位都必须是整数');
+
+    // 获取正确的数组长度
+    let realLength = 0;
+    for (realLength = digits.length - 1; realLength >= 2; realLength--) {
+      console.log({ realLength });
+      if (digits[realLength] !== 0) {
+        break;
+      }
     }
-    if (digits.length > PAdicNumber.MAX_DIGIT_SIZE) {
-      throw new Error(`数字位数不能超过${PAdicNumber.MAX_DIGIT_SIZE}`);
+    realLength++;
+
+    // 下面是和数组长度有关的判断
+    if (realLength > PAdicNumber.MAX_DIGIT_SIZE) {
+      throw new Error(`数字实际位数不能超过${PAdicNumber.MAX_DIGIT_SIZE}`);
     }
-    if (digits.length === 0) {
+    if (realLength === 0) {
       throw new Error(`必须至少有1位数字`);
+    }
+    if (hasInfinityDigits && realLength < PAdicNumber.MAX_DIGIT_SIZE) {
+      throw new Error(`若包含无穷位数则给定的digits长度必须封顶等于${PAdicNumber.MAX_DIGIT_SIZE}`);
     }
 
     super();
 
-    for (let i = digits.length - 1; i > 0; i--) {
-      if (digits[i] === 0) {
-        digits.pop();
-      } else {
-        break;
-      }
-    }
-
     this.p = p;
-    this.push(...digits);
+    this.push(...digits.slice(0, realLength));
     this.hasInfinityDigits = hasInfinityDigits;
   }
 
