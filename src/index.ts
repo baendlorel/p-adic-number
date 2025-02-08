@@ -1,4 +1,4 @@
-export class PAdicNumber extends Array {
+export class PAdicInteger extends Array {
   readonly p: number;
   hasInfinityDigits: boolean;
 
@@ -15,8 +15,7 @@ export class PAdicNumber extends Array {
 
     // 获取正确的数组长度
     let realLength = 0;
-    for (realLength = digits.length - 1; realLength >= 2; realLength--) {
-      console.log({ realLength });
+    for (realLength = digits.length - 1; realLength >= 1; realLength--) {
       if (digits[realLength] !== 0) {
         break;
       }
@@ -24,14 +23,14 @@ export class PAdicNumber extends Array {
     realLength++;
 
     // 下面是和数组长度有关的判断
-    if (realLength > PAdicNumber.MAX_DIGIT_SIZE) {
-      throw new Error(`数字实际位数不能超过${PAdicNumber.MAX_DIGIT_SIZE}`);
+    if (realLength > PAdicInteger.MAX_DIGIT_SIZE) {
+      throw new Error(`数字实际位数不能超过${PAdicInteger.MAX_DIGIT_SIZE}`);
     }
     if (realLength === 0) {
       throw new Error(`必须至少有1位数字`);
     }
-    if (hasInfinityDigits && realLength < PAdicNumber.MAX_DIGIT_SIZE) {
-      throw new Error(`若包含无穷位数则给定的digits长度必须封顶等于${PAdicNumber.MAX_DIGIT_SIZE}`);
+    if (hasInfinityDigits && realLength < PAdicInteger.MAX_DIGIT_SIZE) {
+      throw new Error(`若包含无穷位数则给定的digits长度必须封顶等于${PAdicInteger.MAX_DIGIT_SIZE}`);
     }
 
     super();
@@ -45,7 +44,7 @@ export class PAdicNumber extends Array {
     return 50;
   }
 
-  private static prepare(a: PAdicNumber, b: PAdicNumber) {
+  private static prepare(a: PAdicInteger, b: PAdicInteger) {
     if (a.p !== b.p) {
       throw new Error('不同进数不能相互计算，请转换后再试');
     }
@@ -60,12 +59,12 @@ export class PAdicNumber extends Array {
     return result;
   }
 
-  add(o: PAdicNumber): PAdicNumber {
+  add(o: PAdicInteger): PAdicInteger {
     return this.plus(o);
   }
 
-  plus(o: PAdicNumber): PAdicNumber {
-    const { length, p, a, b } = PAdicNumber.prepare(this, o);
+  plus(o: PAdicInteger): PAdicInteger {
+    const { length, p, a, b } = PAdicInteger.prepare(this, o);
     let carry = 0;
     const r: number[] = [];
     for (let i = 0; i < length; i++) {
@@ -81,17 +80,17 @@ export class PAdicNumber extends Array {
 
     let hasInfinityDigits = false;
     if (carry > 0) {
-      if (r.length < PAdicNumber.MAX_DIGIT_SIZE) {
+      if (r.length < PAdicInteger.MAX_DIGIT_SIZE) {
         r.push(carry);
       } else {
         hasInfinityDigits = true;
       }
     }
-    return new PAdicNumber(p, r, hasInfinityDigits);
+    return new PAdicInteger(p, r, hasInfinityDigits);
   }
 
-  minus(o: PAdicNumber): PAdicNumber {
-    const { length, p, a, b } = PAdicNumber.prepare(this, o);
+  minus(o: PAdicInteger): PAdicInteger {
+    const { length, p, a, b } = PAdicInteger.prepare(this, o);
     let carry = 0;
     const r: number[] = [];
     for (let i = 0; i < length; i++) {
@@ -105,18 +104,18 @@ export class PAdicNumber extends Array {
     }
 
     if (carry === 1) {
-      r.length = PAdicNumber.MAX_DIGIT_SIZE;
-      r.fill(p - 1, length, PAdicNumber.MAX_DIGIT_SIZE);
+      r.length = PAdicInteger.MAX_DIGIT_SIZE;
+      r.fill(p - 1, length, PAdicInteger.MAX_DIGIT_SIZE);
     }
 
-    return new PAdicNumber(p, r, carry === 1);
+    return new PAdicInteger(p, r, carry === 1);
   }
 
-  multiply(o: PAdicNumber): PAdicNumber {
+  multiply(o: PAdicInteger): PAdicInteger {
     return this;
   }
 
-  equals(b: PAdicNumber) {
+  equals(b: PAdicInteger) {
     if (b.length !== this.length) {
       return false;
     }
@@ -131,7 +130,7 @@ export class PAdicNumber extends Array {
     return true;
   }
 
-  convertTo(p: number): PAdicNumber {
+  convertTo(p: number): PAdicInteger {
     if (!Number.isInteger(p)) {
       throw new Error('给定的p不是整数');
     }
